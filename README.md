@@ -1,2 +1,2 @@
 # Digit-Classifier
-Apply different machine learning algorithms to classifiy handwritten digits.
+Apply different machine learning algorithms to classify handwritten digits.
