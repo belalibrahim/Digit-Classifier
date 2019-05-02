@@ -46,15 +46,42 @@ def get_best_knn_prediction(x_train, x_test, y_train, y_test):
     plt.title("")
     plt.show()
 
-    return best_predictions, max_test_score, best_k
+    return best_predictions, max_test_score * 100 , best_k
 
 
 # TODO
 # The function gets the train and test data and
 # return the best prediction, max test score, and best parameter (i.e. max_depth)
 def get_best_dt_prediction(x_train, x_test, y_train, y_test):
+   
+    best_depth = 0
+    best_test_score = 0
+    test_scores = []
+    train_scores = [] 
+    best_predictions = []
+    depths  = range(1,100)
+    
+    for depth in depths :
+        
+        results, test_score, train_score = models.DT(x_train, y_train, x_test, y_test, depth)
+        test_scores.append(test_score * 100 )
+        train_scores.append(train_score * 100 )
+        
+        if test_score > best_test_score:
+            best_test_score = test_score
+            best_depth = depth
+            best_predictions = results
+            
+    plt.plot(depths, test_scores, label='Test Accuracy')
+    plt.plot(depths, train_scores, label='Train Accuracy')
+    plt.legend()
+    plt.xlabel("depth")
+    plt.ylabel("Accuracy (%)")
+    plt.title("Decision Tree train improvment")
+    plt.show()
 
-    return y_test, 0, 0
+
+    return best_predictions , best_test_score * 100 , best_depth
 
 
 # TODO
@@ -79,3 +106,4 @@ def get_best_model(x_train, x_test, y_train, y_test):
         plt.imshow(np.reshape(x_test[n], (-1, 8)), cmap='gray')
         plt.title("Actual: " + str(y_test[n]) + " DT: " + str(dt_prediction[n]) + " LR: " + str(lr_prediction[n]) + " KNN: " + str(knn_prediction[n]))
         plt.show()
+   
