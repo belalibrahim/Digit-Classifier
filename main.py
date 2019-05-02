@@ -1,7 +1,7 @@
 import utils
 
 
-predictors, response, data = utils.get_data()
+predictors, response = utils.get_data()
 
 x_train, x_test, y_train, y_test = utils.split_data(predictors, response)
 

@@ -1,6 +1,5 @@
 import models
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
@@ -12,11 +11,11 @@ def get_data():
     x = data.data
     y = data.target
 
-    return x, y, data
+    return x, y
 
 
 def split_data(x, y, size=0.2):
-    return train_test_split(x, y, stratify=y, test_size=size, random_state=42)
+    return train_test_split(x, y, stratify=y, test_size=size, random_state=2)
 
 
 def get_best_knn_prediction(x_train, x_test, y_train, y_test):
@@ -32,7 +31,7 @@ def get_best_knn_prediction(x_train, x_test, y_train, y_test):
         test_scores.append(test_score)
         train_scores.append(train_score)
 
-        if test_score >= max_test_score:
+        if test_score > max_test_score:
             best_k = k
             best_predictions = results_knn
             max_test_score = test_score
