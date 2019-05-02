@@ -1,30 +1,38 @@
+from sklearn import metrics
+from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 
 
-def DT(x_train, y_train, x_test, y_test, max_depth=None):
-    model = DecisionTreeClassifier(max_depth=max_depth, random_state=16)
-    model.fit(x_train, y_train)
-    results = model.predict(x_test)
-    test_score = model.score(x_test, y_test)
-    train_score = model.score(x_train, y_train)
-    return results, test_score, train_score
+def DT(x_train, y_train, x_test, y_test):
+    DDC = DecisionTreeClassifier(random_state=16)
+    param_grid = dict(max_depth=range(1, 51))
+    clf = GridSearchCV(estimator=DDC, param_grid=dict(param_grid))
+    clf.fit(x_train, y_train)
+    results = clf.best_score_
+    test_score = metrics.accuracy_score(y_test, clf.predict(x_test))
+    train_score = metrics.accuracy_score(y_train, clf.predict(x_train))
+    return results, test_score, train_score, clf.best_params_, clf.cv_results_
 
 
-def KNN(x_train, y_train, x_test, y_test, k=5):
-    model = KNeighborsClassifier(n_neighbors=k)
-    model.fit(x_train, y_train)
-    results = model.predict(x_test)
-    test_score = model.score(x_test, y_test)
-    train_score = model.score(x_train, y_train)
-    return results, test_score, train_score
+def KNN(x_train, y_train, x_test, y_test):
+    knn = KNeighborsClassifier()
+    param_grid = dict(n_neighbors=range(1, 10))
+    clf = GridSearchCV(estimator=knn, param_grid=dict(param_grid))
+    clf.fit(x_train, y_train)
+    results = clf.best_score_
+    test_score = metrics.accuracy_score(y_test, clf.predict(x_test))
+    train_score = metrics.accuracy_score(y_train, clf.predict(x_train))
+    return results, test_score, train_score, clf.best_params_, clf.cv_results_
 
 
-def LR(x_train, y_train, x_test, y_test, c=1.0):
-    model = LogisticRegression(C=c, solver='liblinear', multi_class='auto')
-    model.fit(x_train, y_train)
-    results = model.predict(x_test)
-    test_score = model.score(x_test, y_test)
-    train_score = model.score(x_train, y_train)
-    return results, test_score, train_score
+def LR(x_train, y_train, x_test, y_test):
+    lr = LogisticRegression(solver='liblinear', multi_class='auto')
+    param_grid = dict(C=[0.1, 0.5, 1, 5, 10, 50])
+    clf = GridSearchCV(estimator=lr, param_grid=dict(param_grid))
+    clf.fit(x_train, y_train)
+    results = clf.best_score_
+    test_score = metrics.accuracy_score(y_test, clf.predict(x_test))
+    train_score = metrics.accuracy_score(y_train, clf.predict(x_train))
+    return results, test_score, train_score, clf.best_params_, clf.cv_results_
