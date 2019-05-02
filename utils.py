@@ -1,8 +1,8 @@
-import models
-import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
+
+import models
 
 
 def get_data():
@@ -67,6 +67,7 @@ def get_best_lr_prediction(x_train, x_test, y_train, y_test):
     plt.title("LR")
     plt.show()
     return train_score, results_lr, best_c
+
 
 def get_best_model(x_train, x_test, y_train, y_test):
     dt_prediction, dt_score, best_depth = get_best_dt_prediction(x_train, x_test, y_train, y_test)
