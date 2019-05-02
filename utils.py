@@ -26,7 +26,7 @@ def get_best_knn_prediction(x_train, x_test, y_train, y_test):
     plt.plot(train_scores['std_test_score'], label='Test Accuracy')
     plt.legend()
     plt.xlabel("K")
-    plt.ylabel("Accuracy (%)")
+    plt.ylabel("Mean square error (%)")
     plt.title("KNN")
     plt.show()
 
@@ -45,7 +45,7 @@ def get_best_dt_prediction(x_train, x_test, y_train, y_test):
     plt.plot(train_scores['std_test_score'], label='Test Accuracy')
     plt.legend()
     plt.xlabel("Depth")
-    plt.ylabel("Accuracy (%)")
+    plt.ylabel("Mean square error (%)")
     plt.title("DT")
     plt.show()
     return train_score, results_dt, best_depth
@@ -63,7 +63,7 @@ def get_best_lr_prediction(x_train, x_test, y_train, y_test):
     plt.plot(train_scores['std_test_score'], label='Test Accuracy')
     plt.legend()
     plt.xlabel("C")
-    plt.ylabel("Accuracy (%)")
+    plt.ylabel("Mean square error (%)")
     plt.title("LR")
     plt.show()
     return train_score, results_lr, best_c
